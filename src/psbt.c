@@ -522,7 +522,7 @@ int wally_psbt_output_set_blinding_pubkey(struct wally_psbt_output *output,
                          &output->blinding_pubkey, &output->blinding_pubkey_len);
 }
 
-SET_BYTES_N(wally_psbt_output, value_commitment, ASSET_COMMITMENT_LEN)
+//SET_BYTES_N(wally_psbt_output, value_commitment, ASSET_COMMITMENT_LEN)
 SET_BYTES_N(wally_psbt_output, vbf, BLINDING_FACTOR_LEN)
 SET_BYTES_N(wally_psbt_output, asset_commitment, ASSET_COMMITMENT_LEN)
 SET_BYTES_N(wally_psbt_output, abf, BLINDING_FACTOR_LEN)
@@ -2750,3 +2750,15 @@ PSBT_SET_B(output, surjectionproof)
 #endif /* BUILD_ELEMENTS */
 
 #endif /* SWIG/SWIG_JAVA_BUILD/SWIG_PYTHON_BUILD/SWIG_JAVASCRIPT_BUILD */
+
+#ifdef BUILD_ELEMENTS
+int wally_psbt_output_set_value_commitment(
+    struct wally_psbt_output *output,
+    const unsigned char *commitment,
+    size_t commitment_len) {
+  output->value_commitment = wally_malloc(commitment_len);
+  memcpy(output->value_commitment, commitment, commitment_len);
+  output->value_commitment_len = commitment_len;
+  return 0;
+}
+#endif
